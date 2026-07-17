@@ -1,0 +1,1219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NEXUS - Next-Gen Gaming</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+  :root {
+    --xbox-green: #107c10;
+    --xbox-green-glow: #9bf00b;
+    --ps-blue: #003791;
+    --ps-blue-glow: #00a2ff;
+    --dark-bg: #0a0a0f;
+    --card-bg: rgba(20, 20, 30, 0.7);
+    --glass: rgba(255, 255, 255, 0.05);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Rajdhani', sans-serif;
+    background: var(--dark-bg);
+    color: #fff;
+    overflow-x: hidden;
+  }
+
+  #particles {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    padding: 1rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(10, 10, 15, 0.8);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    transition: all 0.4s ease;
+  }
+
+  .nav.scrolled {
+    padding: 0.6rem 3rem;
+    background: rgba(10, 10, 15, 0.95);
+  }
+
+  .logo {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--xbox-green-glow), var(--ps-blue-glow));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: 2px;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: rgba(255,255,255,0.7);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    position: relative;
+    transition: color 0.3s;
+    text-transform: uppercase;
+  }
+
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--xbox-green-glow), var(--ps-blue-glow));
+    transition: width 0.3s ease;
+  }
+
+  .nav-links a:hover {
+    color: #fff;
+  }
+
+  .nav-links a:hover::after {
+    width: 100%;
+  }
+
+  .nav-cta {
+    padding: 0.6rem 1.8rem;
+    background: linear-gradient(135deg, var(--xbox-green), var(--ps-blue));
+    border: none;
+    border-radius: 30px;
+    color: #fff;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+  }
+
+  .nav-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(0, 162, 255, 0.3);
+  }
+
+  .hero {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: 
+      radial-gradient(ellipse at 20% 50%, rgba(16, 124, 16, 0.15) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 50%, rgba(0, 55, 145, 0.15) 0%, transparent 50%),
+      linear-gradient(180deg, #0a0a0f 0%, #111118 100%);
+    z-index: 1;
+  }
+
+  .hero-grid {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-image: 
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    transform: perspective(500px) rotateX(60deg) translateY(-100px) scale(2);
+    animation: gridMove 20s linear infinite;
+    z-index: 1;
+    opacity: 0.5;
+  }
+
+  @keyframes gridMove {
+    0% { transform: perspective(500px) rotateX(60deg) translateY(0) scale(2); }
+    100% { transform: perspective(500px) rotateX(60deg) translateY(60px) scale(2); }
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    padding: 2rem;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    padding: 0.4rem 1.2rem;
+    border: 1px solid rgba(155, 240, 11, 0.3);
+    border-radius: 20px;
+    color: var(--xbox-green-glow);
+    font-size: 0.85rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; box-shadow: 0 0 20px rgba(155, 240, 11, 0.2); }
+  }
+
+  .hero h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(2.5rem, 6vw, 5.5rem);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(135deg, #fff 0%, #a0a0c0 50%, #fff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    background-size: 200% auto;
+    animation: shine 3s linear infinite;
+  }
+
+  @keyframes shine {
+    to { background-position: 200% center; }
+  }
+
+  .hero p {
+    font-size: clamp(1rem, 2vw, 1.4rem);
+    color: rgba(255,255,255,0.6);
+    max-width: 600px;
+    margin: 0 auto 2.5rem;
+    line-height: 1.6;
+    font-weight: 400;
+  }
+
+  .hero-buttons {
+    display: flex;
+    gap: 1.2rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    padding: 1rem 2.5rem;
+    background: linear-gradient(135deg, var(--xbox-green), #0d5e0d);
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+  }
+
+  .btn-primary:hover::before {
+    left: 100%;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(16, 124, 16, 0.4);
+  }
+
+  .btn-secondary {
+    padding: 1rem 2.5rem;
+    background: transparent;
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 8px;
+    color: #fff;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--ps-blue-glow);
+    color: var(--ps-blue-glow);
+    transform: translateY(-3px);
+    box-shadow: 0 0 30px rgba(0, 162, 255, 0.2);
+  }
+
+  .scroll-indicator {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    animation: bounce 2s infinite;
+  }
+
+  @keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+    40% { transform: translateX(-50%) translateY(-10px); }
+    60% { transform: translateX(-50%) translateY(-5px); }
+  }
+
+  .scroll-indicator svg {
+    width: 30px; height: 30px;
+    stroke: rgba(255,255,255,0.5);
+  }
+
+  section {
+    position: relative;
+    z-index: 5;
+    padding: 6rem 2rem;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+
+  .section-label {
+    display: inline-block;
+    padding: 0.3rem 1rem;
+    border: 1px solid rgba(0, 162, 255, 0.3);
+    border-radius: 20px;
+    color: var(--ps-blue-glow);
+    font-size: 0.8rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .section-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 800;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, #fff, #8899aa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .section-desc {
+    color: rgba(255,255,255,0.5);
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .games-section {
+    background: linear-gradient(180deg, transparent 0%, rgba(0,55,145,0.05) 50%, transparent 100%);
+  }
+
+  .games-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .game-card {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    background: var(--card-bg);
+    border: 1px solid rgba(255,255,255,0.05);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: pointer;
+    height: 420px;
+  }
+
+  .game-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(180deg, transparent 30%, rgba(0,0,0,0.9) 100%);
+    z-index: 2;
+    transition: opacity 0.4s;
+  }
+
+  .game-card-bg {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.6s ease;
+    z-index: 1;
+  }
+
+  .game-card:hover .game-card-bg {
+    transform: scale(1.1);
+  }
+
+  .game-card:hover {
+    transform: translateY(-10px);
+    border-color: rgba(0, 162, 255, 0.3);
+    box-shadow: 0 20px 60px rgba(0, 55, 145, 0.3);
+  }
+
+  .game-card-content {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 2rem;
+    z-index: 3;
+  }
+
+  .game-tag {
+    display: inline-block;
+    padding: 0.25rem 0.8rem;
+    background: rgba(16, 124, 16, 0.3);
+    border: 1px solid rgba(155, 240, 11, 0.3);
+    border-radius: 20px;
+    color: var(--xbox-green-glow);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+  }
+
+  .game-card h3 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .game-card p {
+    color: rgba(255,255,255,0.6);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+  }
+
+  .game-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.4);
+  }
+
+  .game-meta span {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+
+  .stats-section {
+    background: linear-gradient(135deg, rgba(16,124,16,0.05) 0%, rgba(0,55,145,0.05) 100%);
+    border-top: 1px solid rgba(255,255,255,0.03);
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .stat-item {
+    text-align: center;
+    padding: 2rem;
+    position: relative;
+  }
+
+  .stat-item::after {
+    content: '';
+    position: absolute;
+    right: 0; top: 20%; bottom: 20%;
+    width: 1px;
+    background: linear-gradient(180deg, transparent, rgba(255,255,255,0.1), transparent);
+  }
+
+  .stat-item:last-child::after {
+    display: none;
+  }
+
+  .stat-number {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 3rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--xbox-green-glow), var(--ps-blue-glow));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.5rem;
+  }
+
+  .stat-label {
+    color: rgba(255,255,255,0.5);
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  .platforms-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .platform-card {
+    background: var(--card-bg);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 20px;
+    padding: 3rem 2rem;
+    text-align: center;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .platform-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--xbox-green-glow), var(--ps-blue-glow));
+    transform: scaleX(0);
+    transition: transform 0.4s ease;
+  }
+
+  .platform-card:hover::before {
+    transform: scaleX(1);
+  }
+
+  .platform-card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(255,255,255,0.1);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+  }
+
+  .platform-icon {
+    width: 80px; height: 80px;
+    margin: 0 auto 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    font-size: 2.5rem;
+    position: relative;
+  }
+
+  .platform-icon.xbox {
+    background: linear-gradient(135deg, rgba(16,124,16,0.2), rgba(155,240,11,0.1));
+    color: var(--xbox-green-glow);
+    box-shadow: 0 0 30px rgba(16,124,16,0.2);
+  }
+
+  .platform-icon.ps {
+    background: linear-gradient(135deg, rgba(0,55,145,0.2), rgba(0,162,255,0.1));
+    color: var(--ps-blue-glow);
+    box-shadow: 0 0 30px rgba(0,55,145,0.2);
+  }
+
+  .platform-icon.pc {
+    background: linear-gradient(135deg, rgba(100,100,200,0.2), rgba(150,150,255,0.1));
+    color: #a0a0ff;
+    box-shadow: 0 0 30px rgba(100,100,200,0.2);
+  }
+
+  .platform-card h3 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 0.8rem;
+  }
+
+  .platform-card p {
+    color: rgba(255,255,255,0.5);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+
+  .platform-features {
+    list-style: none;
+    text-align: left;
+    padding: 0 1rem;
+  }
+
+  .platform-features li {
+    padding: 0.5rem 0;
+    color: rgba(255,255,255,0.6);
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .platform-features li::before {
+    content: '\2713';
+    color: var(--xbox-green-glow);
+    font-weight: bold;
+  }
+
+  .gallery-section {
+    background: linear-gradient(180deg, transparent 0%, rgba(16,124,16,0.03) 50%, transparent 100%);
+  }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 250px);
+    gap: 1rem;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .gallery-item {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.4s ease;
+  }
+
+  .gallery-item:nth-child(1) { grid-column: span 2; grid-row: span 2; }
+  .gallery-item:nth-child(4) { grid-column: span 2; }
+
+  .gallery-item img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+  }
+
+  .gallery-item:hover img {
+    transform: scale(1.1);
+  }
+
+  .gallery-item::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.7) 100%);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .gallery-item:hover::after {
+    opacity: 1;
+  }
+
+  .gallery-overlay {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 1.5rem;
+    z-index: 2;
+    transform: translateY(20px);
+    opacity: 0;
+    transition: all 0.3s ease;
+  }
+
+  .gallery-item:hover .gallery-overlay {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  .gallery-overlay h4 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.1rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .gallery-overlay span {
+    color: rgba(255,255,255,0.6);
+    font-size: 0.85rem;
+  }
+
+  .newsletter {
+    background: linear-gradient(135deg, rgba(16,124,16,0.1), rgba(0,55,145,0.1));
+    border-radius: 24px;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 4rem 3rem;
+    text-align: center;
+    border: 1px solid rgba(255,255,255,0.05);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .newsletter::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: radial-gradient(circle, rgba(0,162,255,0.05) 0%, transparent 70%);
+    animation: rotate 20s linear infinite;
+  }
+
+  @keyframes rotate {
+    to { transform: rotate(360deg); }
+  }
+
+  .newsletter-content {
+    position: relative;
+    z-index: 2;
+  }
+
+  .newsletter h2 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+  }
+
+  .newsletter p {
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+  }
+
+  .newsletter-form {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .newsletter-form input {
+    flex: 1;
+    min-width: 250px;
+    padding: 1rem 1.5rem;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    color: #fff;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1rem;
+    outline: none;
+    transition: all 0.3s;
+  }
+
+  .newsletter-form input:focus {
+    border-color: var(--ps-blue-glow);
+    box-shadow: 0 0 20px rgba(0,162,255,0.1);
+  }
+
+  .newsletter-form input::placeholder {
+    color: rgba(255,255,255,0.3);
+  }
+
+  footer {
+    background: rgba(0,0,0,0.5);
+    border-top: 1px solid rgba(255,255,255,0.05);
+    padding: 4rem 2rem 2rem;
+    position: relative;
+    z-index: 5;
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 3rem;
+    max-width: 1200px;
+    margin: 0 auto 3rem;
+  }
+
+  .footer-brand .logo {
+    margin-bottom: 1rem;
+    display: inline-block;
+  }
+
+  .footer-brand p {
+    color: rgba(255,255,255,0.4);
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  .footer-links h4 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .footer-links ul {
+    list-style: none;
+  }
+
+  .footer-links li {
+    margin-bottom: 0.8rem;
+  }
+
+  .footer-links a {
+    color: rgba(255,255,255,0.4);
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: color 0.3s;
+  }
+
+  .footer-links a:hover {
+    color: var(--ps-blue-glow);
+  }
+
+  .footer-bottom {
+    text-align: center;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    color: rgba(255,255,255,0.3);
+    font-size: 0.85rem;
+  }
+
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .games-grid { grid-template-columns: 1fr; }
+    .gallery-grid {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: repeat(3, 200px);
+    }
+    .gallery-item:nth-child(1) { grid-column: span 2; grid-row: span 1; }
+    .gallery-item:nth-child(4) { grid-column: span 1; }
+    .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .stats-grid { grid-template-columns: 1fr 1fr; }
+    .stat-item::after { display: none; }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+  .reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  </style>
+</head>
+<body>
+<canvas id="particles"></canvas>
+
+<nav class="nav" id="navbar">
+  <div class="logo">NEXUS</div>
+  <ul class="nav-links">
+    <li><a href="#games">Games</a></li>
+    <li><a href="#platforms">Platforms</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#community">Community</a></li>
+  </ul>
+  <button class="nav-cta">Join Now</button>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Next-Gen Gaming</div>
+    <h1>PLAY BEYOND<br>REALITY</h1>
+    <p>Experience gaming like never before. Stunning visuals, immersive worlds, and endless adventures await in the next generation of interactive entertainment.</p>
+    <div class="hero-buttons">
+      <button class="btn-primary">Explore Games</button>
+      <button class="btn-secondary">Watch Trailer</button>
+    </div>
+  </div>
+  <div class="scroll-indicator">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+      <path d="M12 5v14M5 12l7 7 7-7"/>
+    </svg>
+  </div>
+</section>
+
+<section class="games-section" id="games">
+  <div class="section-header reveal">
+    <div class="section-label">Featured</div>
+    <h2 class="section-title">Trending Games</h2>
+    <p class="section-desc">Discover the most anticipated titles shaping the future of gaming</p>
+  </div>
+  <div class="games-grid">
+    <div class="game-card reveal">
+      <div class="game-card-bg" style="background-image: url('https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&q=80')"></div>
+      <div class="game-card-content">
+        <span class="game-tag">RPG</span>
+        <h3>Shadow Legends</h3>
+        <p>Embark on an epic journey through mystical realms filled with ancient magic and legendary creatures.</p>
+        <div class="game-meta">
+          <span>&#11088; 4.9</span>
+          <span>&#127918; 2.4M Players</span>
+        </div>
+      </div>
+    </div>
+    <div class="game-card reveal">
+      <div class="game-card-bg" style="background-image: url('https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=800&q=80')"></div>
+      <div class="game-card-content">
+        <span class="game-tag">FPS</span>
+        <h3>Neon Warfare</h3>
+        <p>High-octane tactical shooter set in a cyberpunk metropolis. Team up and dominate the battlefield.</p>
+        <div class="game-meta">
+          <span>&#11088; 4.8</span>
+          <span>&#127918; 5.1M Players</span>
+        </div>
+      </div>
+    </div>
+    <div class="game-card reveal">
+      <div class="game-card-bg" style="background-image: url('https://images.unsplash.com/photo-1552820728-8b83bb6b2b0a?w=800&q=80')"></div>
+      <div class="game-card-content">
+        <span class="game-tag">Racing</span>
+        <h3>Velocity X</h3>
+        <p>Break the sound barrier in the most realistic racing simulation ever created. Every detail matters.</p>
+        <div class="game-meta">
+          <span>&#11088; 4.7</span>
+          <span>&#127918; 1.8M Players</span>
+        </div>
+      </div>
+    </div>
+    <div class="game-card reveal">
+      <div class="game-card-bg" style="background-image: url('https://images.unsplash.com/photo-1511512578047-dfb367046420?w=800&q=80')"></div>
+      <div class="game-card-content">
+        <span class="game-tag">Strategy</span>
+        <h3>Empire Rising</h3>
+        <p>Build, conquer, and rule. A grand strategy experience that spans centuries of civilization.</p>
+        <div class="game-meta">
+          <span>&#11088; 4.9</span>
+          <span>&#127918; 890K Players</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="stats-section">
+  <div class="stats-grid">
+    <div class="stat-item reveal">
+      <div class="stat-number" data-target="50">0</div>
+      <div class="stat-label">Million Players</div>
+    </div>
+    <div class="stat-item reveal">
+      <div class="stat-number" data-target="1200">0</div>
+      <div class="stat-label">Games Available</div>
+    </div>
+    <div class="stat-item reveal">
+      <div class="stat-number" data-target="99">0</div>
+      <div class="stat-label">Uptime %</div>
+    </div>
+    <div class="stat-item reveal">
+      <div class="stat-number" data-target="24">0</div>
+      <div class="stat-label">Hour Support</div>
+    </div>
+  </div>
+</section>
+
+<section class="platforms-section" id="platforms">
+  <div class="section-header reveal">
+    <div class="section-label">Platforms</div>
+    <h2 class="section-title">Play Everywhere</h2>
+    <p class="section-desc">Seamless gaming across all your favorite platforms</p>
+  </div>
+  <div class="platforms-grid">
+    <div class="platform-card reveal">
+      <div class="platform-icon xbox">&#127918;</div>
+      <h3>Xbox Series X|S</h3>
+      <p>Power your dreams with the fastest, most powerful Xbox ever. 4K gaming at up to 120 FPS.</p>
+      <ul class="platform-features">
+        <li>4K UHD Blu-ray</li>
+        <li>1TB Custom SSD</li>
+        <li>Ray Tracing</li>
+        <li>Quick Resume</li>
+      </ul>
+    </div>
+    <div class="platform-card reveal">
+      <div class="platform-icon ps">&#9651;&#9675;&#10005;&#9633;</div>
+      <h3>PlayStation 5</h3>
+      <p>Experience lightning-fast loading with an ultra-high speed SSD and haptic feedback.</p>
+      <ul class="platform-features">
+        <li>4K 120Hz Output</li>
+        <li>825GB SSD</li>
+        <li>3D Audio</li>
+        <li>DualSense Controller</li>
+      </ul>
+    </div>
+    <div class="platform-card reveal">
+      <div class="platform-icon pc">&#128187;</div>
+      <h3>PC Gaming</h3>
+      <p>Unleash unlimited potential with customizable rigs and the widest game library available.</p>
+      <ul class="platform-features">
+        <li>8K Support</li>
+        <li>Mod Support</li>
+        <li>VR Ready</li>
+        <li>Cloud Saves</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="gallery-section" id="gallery">
+  <div class="section-header reveal">
+    <div class="section-label">Gallery</div>
+    <h2 class="section-title">Visual Showcase</h2>
+    <p class="section-desc">Stunning moments captured from our top titles</p>
+  </div>
+  <div class="gallery-grid">
+    <div class="gallery-item reveal">
+      <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&q=80" alt="Gaming">
+      <div class="gallery-overlay">
+        <h4>Epic Battles</h4>
+        <span>Shadow Legends</span>
+      </div>
+    </div>
+    <div class="gallery-item reveal">
+      <img src="https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=800&q=80" alt="Gaming">
+      <div class="gallery-overlay">
+        <h4>Cyber City</h4>
+        <span>Neon Warfare</span>
+      </div>
+    </div>
+    <div class="gallery-item reveal">
+      <img src="https://images.unsplash.com/photo-1552820728-8b83bb6b2b0a?w=800&q=80" alt="Gaming">
+      <div class="gallery-overlay">
+        <h4>Speed Demon</h4>
+        <span>Velocity X</span>
+      </div>
+    </div>
+    <div class="gallery-item reveal">
+      <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?w=800&q=80" alt="Gaming">
+      <div class="gallery-overlay">
+        <h4>Kingdom Builder</h4>
+        <span>Empire Rising</span>
+      </div>
+    </div>
+    <div class="gallery-item reveal">
+      <img src="https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?w=800&q=80" alt="Gaming">
+      <div class="gallery-overlay">
+        <h4>Space Odyssey</h4>
+        <span>Star Voyager</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="newsletter-section" id="community">
+  <div class="newsletter reveal">
+    <div class="newsletter-content">
+      <h2>Join the Community</h2>
+      <p>Get exclusive updates, beta access, and special offers delivered to your inbox.</p>
+      <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Welcome to the Nexus community!');">
+        <input type="email" placeholder="Enter your email" required>
+        <button type="submit" class="btn-primary">Subscribe</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo">NEXUS</div>
+      <p>The ultimate gaming destination. Play, connect, and compete with millions of players worldwide.</p>
+    </div>
+    <div class="footer-links">
+      <h4>Games</h4>
+      <ul>
+        <li><a href="#">New Releases</a></li>
+        <li><a href="#">Top Rated</a></li>
+        <li><a href="#">Coming Soon</a></li>
+        <li><a href="#">Free to Play</a></li>
+      </ul>
+    </div>
+    <div class="footer-links">
+      <h4>Support</h4>
+      <ul>
+        <li><a href="#">Help Center</a></li>
+        <li><a href="#">Account</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms of Service</a></li>
+      </ul>
+    </div>
+    <div class="footer-links">
+      <h4>Connect</h4>
+      <ul>
+        <li><a href="#">Discord</a></li>
+        <li><a href="#">Twitter</a></li>
+        <li><a href="#">YouTube</a></li>
+        <li><a href="#">Twitch</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    &copy; 2026 Nexus Gaming. All rights reserved. Designed for gamers, by gamers.
+  </div>
+</footer>
+
+<script>
+  const canvas = document.getElementById('particles');
+  const ctx = canvas.getContext('2d');
+  let particles = [];
+
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
+
+  class Particle {
+    constructor() {
+      this.x = Math.random() * canvas.width;
+      this.y = Math.random() * canvas.height;
+      this.size = Math.random() * 2 + 0.5;
+      this.speedX = (Math.random() - 0.5) * 0.5;
+      this.speedY = (Math.random() - 0.5) * 0.5;
+      this.opacity = Math.random() * 0.5 + 0.1;
+    }
+    update() {
+      this.x += this.speedX;
+      this.y += this.speedY;
+      if (this.x > canvas.width) this.x = 0;
+      if (this.x < 0) this.x = canvas.width;
+      if (this.y > canvas.height) this.y = 0;
+      if (this.y < 0) this.y = canvas.height;
+    }
+    draw() {
+      ctx.fillStyle = `rgba(0, 162, 255, ${this.opacity})`;
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+
+  for (let i = 0; i < 80; i++) {
+    particles.push(new Particle());
+  }
+
+  function animateParticles() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => {
+      p.update();
+      p.draw();
+    });
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 150) {
+          ctx.strokeStyle = `rgba(0, 162, 255, ${0.1 * (1 - dist / 150)})`;
+          ctx.lineWidth = 0.5;
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.stroke();
+        }
+      }
+    }
+    requestAnimationFrame(animateParticles);
+  }
+  animateParticles();
+
+  window.addEventListener('scroll', () => {
+    const nav = document.getElementById('navbar');
+    if (window.scrollY > 50) {
+      nav.classList.add('scrolled');
+    } else {
+      nav.classList.remove('scrolled');
+    }
+  });
+
+  const revealElements = document.querySelectorAll('.reveal');
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('active');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  revealElements.forEach(el => revealObserver.observe(el));
+
+  const statNumbers = document.querySelectorAll('.stat-number');
+  const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const target = parseInt(entry.target.getAttribute('data-target'));
+        const duration = 2000;
+        const step = target / (duration / 16);
+        let current = 0;
+        const updateCounter = () => {
+          current += step;
+          if (current < target) {
+            entry.target.textContent = Math.floor(current) + (target > 100 ? 'M+' : '+');
+            requestAnimationFrame(updateCounter);
+          } else {
+            entry.target.textContent = target + (target > 100 ? 'M+' : '+');
+          }
+        };
+        updateCounter();
+        counterObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  statNumbers.forEach(el => counterObserver.observe(el));
+
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  window.addEventListener('scroll', () => {
+    const scrolled = window.scrollY;
+    const heroContent = document.querySelector('.hero-content');
+    const heroGrid = document.querySelector('.hero-grid');
+    if (heroContent) {
+      heroContent.style.transform = `translateY(${scrolled * 0.3}px)`;
+      heroContent.style.opacity = 1 - (scrolled / 700);
+    }
+    if (heroGrid) {
+      heroGrid.style.transform = `perspective(500px) rotateX(60deg) translateY(${scrolled * 0.1}px) scale(2)`;
+    }
+  });
+</script>
+</body>
+</html>
